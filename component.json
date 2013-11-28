@@ -1,0 +1,21 @@
+{
+  "name": "word-counter",
+  "repo": "redbadger/word-counter",
+  "description": "Watch a text field and live update word count",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "component/event": "*",
+    "ded/qwery": "*"
+  },
+  "development": {
+    "visionmedia/mocha": "*",
+    "chaijs/chai": "*"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": [
+    "index.js"
+  ],
+  "remotes": []
+}
