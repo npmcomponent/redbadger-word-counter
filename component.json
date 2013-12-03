@@ -2,7 +2,7 @@
   "name": "word-counter",
   "repo": "redbadger/word-counter",
   "description": "Watch a text field and live update word count",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "keywords": [],
   "dependencies": {
     "component/each": "*",
