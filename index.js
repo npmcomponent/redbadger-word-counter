@@ -1,5 +1,6 @@
 var events = require('event');
 var qwery = require('qwery');
+var each = require('each');
 
 module.exports = WordCounter;
 
@@ -12,24 +13,30 @@ Creates and attaches a word counter to an input field (input or textarea) specif
 by the ```inputSelector``` and outputs the word count to an element specified by the
 ```outputSelector```. Both are CSS selectors.
 
-You can optionally pass a transformation function, that will receive a single integer –
-the word count and its return value will be outputed.
+When the selectors match multiple elements the wordcount will be summed for all the
+inputs.
+
+You can optionally pass a transformation function, that will receive an integer –
+the word count and the output element. Its return value will be used as output.
+The transformation callback will get called once for each output element.
 */
 function WordCounter(inputSelector, outputSelector, transform) {
-  var inputEl = qwery(inputSelector)[0];
-  var outputEl = qwery(outputSelector)[0];
+  var inputEls = qwery(inputSelector);
+  var outputEls = qwery(outputSelector);
   var self = this;
 
   var callback = function(e) {
-    self.update(inputEl, outputEl, transform);
+    self.update(inputEls, outputEls, transform);
   };
 
-  events.bind(inputEl, 'keyup', callback);
-  events.bind(inputEl, 'click', callback);
-  events.bind(inputEl, 'focus', callback);
-  events.bind(inputEl, 'blur', callback);
+  each(inputEls, function(inputEl) {
+    events.bind(inputEl, 'keyup', callback);
+    events.bind(inputEl, 'click', callback);
+    events.bind(inputEl, 'focus', callback);
+    events.bind(inputEl, 'blur', callback);
+  });
 
-  this.update(inputEl, outputEl, transform);
+  this.update(inputEls, outputEls, transform);
 }
 
 WordCounter.prototype.countWords = function(text) {
@@ -39,11 +46,18 @@ WordCounter.prototype.countWords = function(text) {
   return text.trim().split(/\s+/).length;
 };
 
-WordCounter.prototype.update = function(inputEl, outputEl, transform) {
-  var wc = this.countWords(inputEl.value);
+WordCounter.prototype.update = function(inputEls, outputEls, transform) {
+  var wc = 0;
+  var self = this;
 
-  if(isFunction(transform))
-    wc = transform(wc);
+  each(inputEls, function(inputEl) {
+    wc += self.countWords(inputEl.value);
+  });
 
-  outputEl.innerHTML = wc;
+  each(outputEls, function(outputEl) {
+    if(isFunction(transform))
+      wc = transform(wc, outputEl);
+
+    outputEl.innerHTML = wc;
+  });
 }

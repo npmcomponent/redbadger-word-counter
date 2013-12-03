@@ -9,9 +9,14 @@
 
   <div>
     <form>
-      <input type="text" id="input" />
+      <input type="text" id="input" class="counted" placeholder="input 1"/>
+      <textarea id="textarea" class="counted">
+      </textarea>
     </form>
-    <p id="output">
+    <p id="output-1" class="output">
+
+    </p>
+    <p id="output-2" class="output">
 
     </p>
   </div>
@@ -20,6 +25,20 @@
     // mocha.setup('bdd')
     // mocha.checkLeaks();
     // mocha.run();
+
+    WordCounter = require('word-counter');
+    output1 = document.getElementById("output-1");
+    output2 = document.getElementById("output-1");
+
+    counter = new WordCounter(".counted", ".output", function(wc, element) {
+      if(element == output1) {
+        return "First output: " + wc;
+      } else {
+        return "Second output: " + wc;
+      }
+    });
+
+
   </script>
 </body>
 </html>
