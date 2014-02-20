@@ -1,0 +1,13 @@
+{
+  "name": "redbadger-word-counter",
+  "description": "Watch a text field and live update word count",
+  "version": "0.1.0",
+  "keywords": [],
+  "main": "index.js",
+  "dependencies": {
+    "component-each": "git://github.com/npmcomponent/component-each.git",
+    "component-event": "git://github.com/npmcomponent/component-event.git",
+    "ded-qwery": "git://github.com/npmcomponent/ded-qwery.git"
+  },
+  "license": "MIT"
+}

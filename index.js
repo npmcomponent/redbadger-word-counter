@@ -1,6 +1,6 @@
-var events = require('event');
-var qwery = require('qwery');
-var each = require('each');
+var events = require('component-event');
+var qwery = require('ded-qwery');
+var each = require('component-each');
 
 module.exports = WordCounter;
 
